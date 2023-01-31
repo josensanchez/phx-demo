@@ -15,11 +15,11 @@ It relies on a ApiClient GenServer running on a Supervisor and it contains all i
 
 The main view is a LiveView that handles user interactions.
 
-- **GhClient.GhProjectsLive** (main view)
+- **[GhClient.GhProjectLive](lib/gh_client_web/live/gh_project_live.ex)** main view  
 
 - **Supervisor**: makes sure that the ApliClient si always running 
-  - **ApiClient**: handles the state
-    - **GitServer** -> **GitHub** (implementation of GitServer) query the githut RestAPi
+  - **[ApiClient](lib/gh_client/api_client.ex)**: handles the state
+    - **GitServer** -> **[GitHub](lib/gh_client/github.ex)** (implementation of GitServer) query the github RestAPi
  
 
 

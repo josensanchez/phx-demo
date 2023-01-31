@@ -9,7 +9,7 @@ A LiveView will query that data from the existing pool and will show user and re
 
 It relies on a ApiClient GenServer running on a Supervisor and it contains all information in it's state. The ApiClient schedule queries to the GihHub Api as soon as it fires up and keep pulling until the quota is completed.
 
-### There is also a [Nextjs 13 application](https://github.com/josensanchez/nextjs13-demo) in with I explore other features of the github public API
+### There is also a [Nextjs 13 application](https://github.com/josensanchez/nextjs13-demo) in with I explore other github public API features
 
 ![phx-demo3](https://user-images.githubusercontent.com/5849818/215769318-36003d37-1093-4a04-ab4b-9db56783da8d.png)
 

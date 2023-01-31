@@ -39,8 +39,12 @@ defmodule GitHub do
     "/search/repositories?q=language:elixir+sort:updated-desc&per_page=50"
   end
 
-  defp searchProjectsUrl(page) do
+  defp searchProjectsUrl(page) when page < 21 do
     "/search/repositories?q=language:elixir+sort:updated-desc&per_page=50&page="<> to_string(page)
+  end
+
+  defp searchProjectsUrl(page) do
+    "/search/repositories?q=language:elixir+sort:updated-asc&per_page=50&page="<> to_string(page - 20)
   end
 
   defp mapResponse({"items", v}) do

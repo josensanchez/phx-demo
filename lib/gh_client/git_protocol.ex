@@ -1,11 +1,3 @@
-# defprotocol GitServer do
-  # def get_user(user)
-  # def get_repositories(page)
-# end
-
-
-
-
 
 defmodule GitServer do
 

@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div id="users">
     <%= unless @data.only do %>
-      <h4>Github user from Elixir projects</h4>
+      <h4>Github users from Elixir projects</h4>
     <% end %>
     <div class="grid">
       <div>
@@ -41,8 +41,8 @@
               <input type="search" name="user" phx-debounce="100"  value={@data.q} autofocus placeholder="search for github users"/>
             </form>
             <hgroup>
-              <h5>Users :<%= length(@data.users) %></h5>
-              <h5>Repos :<%= length(@data.repos) %></h5>
+              <h5>Users: <%= length(@data.users) %></h5>
+              <h5>Repos: <%= length(@data.repos) %></h5>
               <h5>
                   pulling Elixir based repositories from github (<%= @data.page %> hits)
                   <i aria-busy="true">

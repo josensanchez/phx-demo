@@ -3,7 +3,6 @@ defmodule GhClientWeb.GHProjectLive do
   
 
   def mount(_params, _session, socket) do
-    IO.puts "MOUNT LIVEVIEW"
     page = ApiClient.get_page()
     repos = ApiClient.get_repos("")
     users = ApiClient.get_users("")
@@ -12,13 +11,11 @@ defmodule GhClientWeb.GHProjectLive do
   end
 
   def handle_event("paginate_users", _, socket) do
-    IO.puts "HANDLE PAGINATE USERS"
     socket = update(socket, :data, fn b -> %{ b | :user_count => b.user_count + 20} end)
     {:noreply, socket}
   end
 
   def handle_event("search", %{ "user"=> q }, socket) do
-    IO.puts "HANDLE GENERIC EVENT: search" 
     socket = update(socket, :data, fn b -> %{ b | :q => q} end)
     Process.send(self(), "update_now", [])
     {:noreply, socket}

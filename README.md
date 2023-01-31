@@ -31,6 +31,6 @@ Some test where added, run `mix test` to execute them.
 
 ## Usage
 
-
+Search users and their repositories 
 
 

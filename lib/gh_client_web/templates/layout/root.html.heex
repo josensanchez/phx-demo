@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="csrf-token" content={csrf_token_value()}>
+    <%= live_title_tag assigns[:page_title] || "GhClient", suffix: " · Phoenix Framework" %>
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+  </head>
+  <body>
+    <header>
+        <nav class="container-fluid">
+          <ul>
+          <li>
+        <a href="https://phoenixframework.org/" class="phx-logo">
+          <img src={Routes.static_path(@conn, "/images/phoenix.png")} alt="Phoenix Framework Logo"/>
+        </a>
+        </li>
+        </ul>
+          <ul>
+            <li><a class="contrast" href="https://github.com/josensanchez">josenanchez</a></li>
+            <li>
+              <img style="height:auto;" alt="" width="80" height="80" class="avatar" src="https://avatars.githubusercontent.com/u/5849818?v=4">
+            </li>
+          </ul>
+        </nav>
+    </header>
+    <%= @inner_content %>
+  </body>
+</html>

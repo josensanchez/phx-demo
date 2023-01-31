@@ -1,0 +1,72 @@
+<div class="container-fluid">
+  <div id="users">
+    <%= unless @data.only do %>
+      <h4>Github user from Elixir projects</h4>
+    <% end %>
+    <div class="grid">
+      <div>
+        <%= unless @data.only do %>
+          <div class="avatars">
+            <%= @data.users |> Enum.take(@data.user_count) |> Enum.map(fn(item) -> %>
+              <div class="avatar-wrapper" >
+                <a href="#"  data-tooltip={item[:login]} phx-click="search" phx-value-user={item[:login]} >
+                  <img  class="avatar" src={item[:avatar_url]} alt={item[:name]}  >
+                </a>
+              </div>
+            <% end) %>
+          </div>
+          <button class="outline paginate" phx-click="paginate_users">show more</button>
+        <% end %>
+        <%= if @data.only do %>
+          <article>
+            <%= @data.users |> Enum.take(1) |> Enum.map(fn(user) -> %>
+              <div class="grid">
+                <div>
+                  <img  class="big-avatar" src={user[:avatar_url]} alt={user[:login]}  >
+                </div>
+                <div>
+                  <p><b>alias: </b><%= user[:login] %></p>
+                  <p><b>type: </b><%= user[:type] %></p>
+                  <p><a href={user[:html_url]} target="_blanck"><%= user[:html_url] %></a></p>
+                  <a href="#" role="button" phx-click="search" phx-value-user="" class="outline">Close</a>
+                </div>
+              </div>
+            <% end) %>
+          </article>
+        <% end %>
+      </div>
+      <div>
+          <article>
+            <form phx-change="search" phx-submit="search">
+              <input type="text" name="user" phx-debounce="100" placeholder="search for github users"/>
+            </form>
+            <hgroup>
+              <h5>Users :<%= length(@data.users) %></h5>
+              <h5>Repos :<%= length(@data.repos) %></h5>
+              <h5>
+                  pulling Elixir based repositories from github (<%= @data.page %> hits)
+                  <i aria-busy="true">
+                  </i>
+              </h5>
+            </hgroup>
+          </article>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="repos">
+    <h4>Repos</h4>
+    <div class="repositories">
+      <%= Enum.map(@data.repos, fn(item) -> %>
+        <article>
+          <hgroup>
+            <h1><%= item[:name] %></h1>
+            <h2><%= item[:full_name] %></h2>
+          </hgroup>
+          <p><%= item[:description] %></p>
+          <a role="button" target="_blank" href={item[:html_url]} >show in GitHub</a>
+        </article>
+      <% end) %>
+    </div>
+</div>

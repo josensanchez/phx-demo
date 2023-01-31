@@ -8,7 +8,7 @@ defmodule GhClientWeb.GHProjectLive do
     repos = ApiClient.get_repos("")
     users = ApiClient.get_users("")
     Process.send_after(self(), "update", 500)
-    {:ok, assign(socket, :data, %{:page => page, :repos => repos, :users=> users, :user_count=> 60, :q=>"", :only=>false})}
+    {:ok, assign(socket, :data, %{:page => page, :repos => repos, :users=> users, :user_count=> 50, :q=>"", :only=>false})}
   end
 
   def handle_event("paginate_users", _, socket) do

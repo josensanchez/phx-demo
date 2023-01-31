@@ -36,11 +36,11 @@ defmodule GitHub do
   end
 
   defp searchProjectsUrl(1) do
-    "/search/repositories?q=language:elixir"
+    "/search/repositories?q=language:elixir+sort:updated-desc&per_page=50"
   end
 
   defp searchProjectsUrl(page) do
-    "/search/repositories?q=language:elixir&page="<> to_string(page)
+    "/search/repositories?q=language:elixir+sort:updated-desc&per_page=50&page="<> to_string(page)
   end
 
   defp mapResponse({"items", v}) do

@@ -1,7 +1,7 @@
 defmodule ApiClient do
   use GenServer
   @one_second 1000
-  @ten_seconds 10000
+  @ten_seconds 5000
   @one_minute  60000
 
   def start_link(opts \\ []) do
@@ -13,7 +13,6 @@ defmodule ApiClient do
   end
 
   def init([]) do
-    IO.puts "Api Client Started XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     Process.send_after(self(), :update, @one_second)
     Process.send_after(self(), :process_data, @one_second)
 
@@ -75,12 +74,11 @@ defmodule ApiClient do
   end
 
   def handle_info(:process_data, state) do
-    [repo | raw ] = state.raw
     new_state = state
-    |> Map.put(:raw, raw)
-    |> Map.put(:users, update_users(state.users, repo))
-    |> Map.put(:repos, update_repos(state.repos, repo))
-    Process.send_after(self(), :process_data, 333)
+    |> Map.put(:raw, [])
+    |> Map.put(:users, update_users(state.users, state.raw))
+    |> Map.put(:repos, update_repos(state.repos, state.raw))
+    Process.send_after(self(), :process_data, @ten_seconds)
     {:noreply, new_state}
   end
 
@@ -88,21 +86,34 @@ defmodule ApiClient do
     new_state = state
       |> Map.put(:raw, state.raw ++ i)
       |> Map.put(:page, state.page + 1)
-    IO.puts "Apli Client HANDLE INFO update XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     { new_state,  @ten_seconds }
   end 
 
   defp update_state(state, _response) do
-    IO.puts "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF   Apli Client HANDLE INFO update FAILED "
+    IO.puts "/****************************************************************/"
+    IO.puts "/*           Apli Client HANDLE INFO update FAILED              */"
+    IO.puts "/*                 Probably due to quotas                       */"
+    IO.puts "/****************************************************************/"
+    IO.puts "/*                  Pooling every minute                        */"
+    IO.puts "/****************************************************************/"
     { state,  @one_minute }
   end 
 
-  defp update_users(users, repo) do
+  defp update_users(users, []) do
+    users
+  end
+
+  defp update_users(users, [repo | repos]) do
+    users = add_user(users, repo)
+    update_users(users, repos)
+  end
+
+  defp add_user(users, repo) do
     Map.put(users, repo[:owner][:id], repo[:owner])
   end
 
-  defp update_repos(repos, repo) do
-    repos ++ [repo]
+  defp update_repos(repos, new_repos) do
+    repos ++ new_repos
   end
 
 end

@@ -15,7 +15,7 @@
               </div>
             <% end) %>
           </div>
-          <button class="outline paginate" phx-click="paginate_users">show more</button>
+          <button class="outline paginate mt-4" phx-click="paginate_users">show more</button>
         <% end %>
         <%= if @data.only do %>
           <article>
@@ -38,7 +38,7 @@
       <div>
           <article>
             <form phx-change="search" phx-submit="search">
-              <input type="text" name="user" phx-debounce="100" placeholder="search for github users"/>
+              <input type="search" name="user" phx-debounce="100"  value={@data.q} autofocus placeholder="search for github users"/>
             </form>
             <hgroup>
               <h5>Users :<%= length(@data.users) %></h5>
@@ -58,7 +58,7 @@
 <div id="repos">
     <h4>Repos</h4>
     <div class="repositories">
-      <%= Enum.map(@data.repos, fn(item) -> %>
+      <%= @data.repos |> Enum.take(10) |> Enum.map(fn(item) -> %>
         <article>
           <hgroup>
             <h1><%= item[:name] %></h1>
